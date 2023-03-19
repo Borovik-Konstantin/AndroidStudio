@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +19,13 @@ import com.example.fclient2.databinding.ActivityMainBinding;
 
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.io.IOUtils;
+
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity implements TransactionEvents {
     ActivityResultLauncher activityResultLauncher;
@@ -61,11 +70,12 @@ public class MainActivity extends AppCompatActivity implements TransactionEvents
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Toast.makeText(this, "Hello", Toast.LENGTH_LONG).show();
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        int res = initRng();
-        byte[] v = randomBytes(10);
+        //int res = initRng();
+        //byte[] v = randomBytes(10);
 
         // Example of a call to a native method
         TextView tv = binding.sampleText;
@@ -93,9 +103,11 @@ public class MainActivity extends AppCompatActivity implements TransactionEvents
 
     public void onButtonClick(View v)
     {
+        //Toast.makeText(MainActivity.this, "Hello", Toast.LENGTH_LONG).show();
+        testHttpClient();
+        //byte[] trd = stringToHex("9F0206000000000100");
+        //transaction(trd);
 
-        byte[] trd = stringToHex("9F0206000000000100");
-        transaction(trd);
 
        /* new Thread(()-> {
             try {
@@ -116,11 +128,6 @@ public class MainActivity extends AppCompatActivity implements TransactionEvents
     }
 
 
-
-
-
-
-
     public static byte[] stringToHex(String s)
     {
         byte[] hex;
@@ -133,6 +140,42 @@ public class MainActivity extends AppCompatActivity implements TransactionEvents
             hex = null;
         }
         return hex;
+    }
+
+
+
+    protected void testHttpClient()
+    {
+        new Thread(() -> {
+            try {
+                HttpURLConnection uc = (HttpURLConnection)
+                        (HttpURLConnection) (new URL("http://10.0.2.2:8080/api/v1/title").openConnection());
+                InputStream inputStream = uc.getInputStream();
+                String html = IOUtils.toString(inputStream);
+                String title = getPageTitle(html);
+                Thread.sleep(1000);
+                runOnUiThread(() ->
+                {
+                    Toast.makeText(this, title, Toast.LENGTH_LONG).show();
+                });
+
+            } catch (Exception ex) {
+                Log.e("fapptag", "Http client fails", ex);
+            }
+        }).start();
+    }
+
+
+
+    private String getPageTitle(String html) {
+        Pattern pattern = Pattern.compile("<title>(.+?)</title>", Pattern.DOTALL);
+        Matcher matcher = pattern.matcher(html);
+        String p;
+        if (matcher.find())
+            p = matcher.group(1);
+        else
+            p = "Not found";
+        return p;
     }
 
 
