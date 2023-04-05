@@ -29,15 +29,13 @@ public class Museum {
 
     @JsonIgnore
     @OneToMany(mappedBy = "museum")
-    public List<Painting>
-            paintings = new ArrayList<>();
+    public List<Painting> paintings = new ArrayList<>();
 
     @JsonIgnore
     @ManyToMany
     @JoinTable(name = "usersmuseums", joinColumns = @JoinColumn(name = "museumid"),
             inverseJoinColumns = @JoinColumn(name = "userid"))
-    public Set<User>
-            users = new HashSet<>();
+    public Set<User> users = new HashSet<>();
 }
 
 

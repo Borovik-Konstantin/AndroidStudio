@@ -120,7 +120,7 @@ public class UserController {
         int cnt = 0;
         if (uu.isPresent()) {
             User u = uu.get();
-            for (Museum m : museums) {
+            for (Museum m : u.museums) {
                 u.removeMuseum(m);
                 cnt++;
             }
