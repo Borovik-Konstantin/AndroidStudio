@@ -12,6 +12,7 @@ function showError(msg)
     store.dispatch(alertActions.error(msg))
 }
 
+
 axios.interceptors.request.use(
     config => {
         store.dispatch(alertActions.clear())
@@ -42,6 +43,31 @@ class BackendService {
     login(login, password) {
         return axios.post(`${AUTH_URL}/login`, {login, password})
     }
+
+
+    /* Countries */
+
+    retrieveAllCountries(page, limit) {
+        return axios.get(`${API_URL}/countries`);
+    }
+
+    retrieveCountry(id) {
+        return axios.get(`${API_URL}/countries/${id}`);
+    }
+
+    createCountry(country) {
+        return axios.post(`${API_URL}/countries`, country);
+    }
+
+    updateCountry(country) {
+        return axios.put(`${API_URL}/countries/${country.id}`, country);
+    }
+
+    deleteCountries(countries) {
+        return axios.post(`${API_URL}/deletecountries`, countries);
+    }
+
+
 
 
     logout() {
