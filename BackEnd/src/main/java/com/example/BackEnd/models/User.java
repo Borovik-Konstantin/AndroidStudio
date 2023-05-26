@@ -1,5 +1,6 @@
 package com.example.BackEnd.models;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
@@ -8,43 +9,43 @@ import java.util.Set;
 import java.time.LocalDateTime;
 
 @Entity
-
 @Table(name = "users")
 @Access(AccessType.FIELD)
 public class User {
 
-    public User() {
-    }
-
+    public User() { }
     public User(Long id) {
         this.id = id;
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
     public long id;
 
-    @Column(name = "login", unique = true, nullable = false)
-    public String login;
+    @Transient
+    public String np;
 
+    @Column(name = "login", nullable = false, unique = true)
+    public String login;
 
     @JsonIgnore
     @Column(name = "password")
     public String password;
-    @Column(name = "email", unique = true, nullable = false)
+
+    @Column(name = "email", nullable = false, unique = true)
     public String email;
+
     @JsonIgnore
     @Column(name = "salt")
     public String salt;
-    @JsonIgnore
+
     @Column(name = "token")
     public String token;
 
     @Column(name = "activity")
     public LocalDateTime activity;
 
-    @ManyToMany(mappedBy = "users")
+    @ManyToMany(mappedBy = "users", cascade = CascadeType.REMOVE)
     public Set<Museum> museums = new HashSet<>();
 
     public void addMuseum(Museum m) {
@@ -56,7 +57,4 @@ public class User {
         this.museums.remove(m);
         m.users.remove(this);
     }
-
-
-
 }

@@ -69,6 +69,14 @@ import {connect} from "react-redux";
 import SideBar from "./components/SideBar";
 import CountryListComponent from "./ComponentLists/CountryListComponent";
 import CountryComponent from "./comp/CountryComponent";
+import ArtistListComponent from "./ComponentLists/ArtistListComponent";
+import ArtistComponent from "./comp/ArtistComponent";
+import MuseumListComponent from "./ComponentLists/MuseumListComponent";
+import MuseumComponent from "./comp/MuseumComponent";
+import MyAccountComponent from "./comp/MyAccountComponent";
+import UserListComponent from "./ComponentLists/UserListComponent";
+import PaintingsListComponent from "./ComponentLists/PaintingsListComponent";
+import PaintingComponent from "./comp/PaintingComponent";
 
 const ProtectedRoute = ({children}) => {
     let user = Utils.getUser();
@@ -93,8 +101,16 @@ const App = props => {
                         <Routes>
                             <Route path="login" element={<Login />}/>
                             <Route path="home" element={<ProtectedRoute><Home/></ProtectedRoute>}/>
+                            <Route path="account" element={<ProtectedRoute><MyAccountComponent/></ProtectedRoute>}/>
                             <Route path="countries" element={<ProtectedRoute><CountryListComponent/></ProtectedRoute>}/>
                             <Route path="countries/:id" element={<ProtectedRoute><CountryComponent /></ProtectedRoute>}/>
+                            <Route path="artists" element={<ProtectedRoute><ArtistListComponent/></ProtectedRoute>}/>
+                            <Route path="artists/:id" element={<ProtectedRoute><ArtistComponent /></ProtectedRoute>}/>
+                            <Route path="museums" element={<ProtectedRoute><MuseumListComponent/></ProtectedRoute>}/>
+                            <Route path="museums/:id" element={<ProtectedRoute><MuseumComponent /></ProtectedRoute>}/>
+                            
+                            <Route path="users" element={<ProtectedRoute><UserListComponent/></ProtectedRoute>}/>
+
                         </Routes>
                     </div>
                 </div>
