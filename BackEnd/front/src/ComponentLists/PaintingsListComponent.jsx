@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faEdit, faPlus } from '@fortawesome/free-solid-svg-icons'
@@ -10,7 +9,7 @@ import PaginationComponent from '../comp/PaginationComponent';
 const PaintingsListComponent = props => {
 
     const [message, setMessage] = useState();
-    const [names, setNames] = useState([]);
+    const [paintings, setPaintings] = useState([]);
     const [selectedPaintings, setSelectedPaintings] = useState([]);
     const [show_alert, setShowAlert] = useState(false);
     const [checkedItems, setCheckedItems] = useState([]);
@@ -25,7 +24,7 @@ const PaintingsListComponent = props => {
     }
 
     const setChecked = v => {
-        setCheckedItems(Array(names.length).fill(v));
+        setCheckedItems(Array(paintings.length).fill(v));
     }
 
     const handleCheckChange = e => {
@@ -44,7 +43,7 @@ const PaintingsListComponent = props => {
 
     const deletePaintingsClicked = () => {
         let x = [];
-        names.map((t, idx) => {
+        paintings.map((t, idx) => {
             if (checkedItems[idx]) {
                 x.push(t)
             }
@@ -53,10 +52,10 @@ const PaintingsListComponent = props => {
         if (x.length > 0) {
             var msg;
             if (x.length > 1) {
-                msg = "Пожалуйста подтвердите удаление " + x.length + " картин";
+                msg = "Пожалуйста подтвердите удаление " + x.length + " стран";
             }
             else {
-                msg = "Пожалуйста подтвердите удаление  картины" + x[0].name;
+                msg = "Пожалуйста подтвердите удаление страны " + x[0].name;
             }
             setShowAlert(true);
             setSelectedPaintings(x);
@@ -68,7 +67,7 @@ const PaintingsListComponent = props => {
         BackendService.retrieveAllPaintings(cp, limit)
             .then(
                 resp => {
-                    setNames(resp.data.content);
+                    setPaintings(resp.data.content);
                     setHidden(false);
                     setTotalCount(resp.data.totalElements);
                     setPage(cp);
@@ -81,7 +80,7 @@ const PaintingsListComponent = props => {
             .finally(() => setChecked(false))
     }
 
-    const updatePaintingsClicked = id => {
+    const updatePaintingClicked = id => {
         navigate(`/paintings/${id}`)
     }
 
@@ -96,7 +95,7 @@ const PaintingsListComponent = props => {
     }
 
     const addPaintingClicked = () => {
-        navigate(`/countries/-1`)
+        navigate(`/paintings/-1`)
     }
 
     if (hidden)
@@ -104,7 +103,7 @@ const PaintingsListComponent = props => {
     return (
         <div className="m-4">
             <div className="row my-2">
-                <h3>Картины</h3>
+                <h3>Художники</h3>
                 <div className="btn-toolbar">
                     <div className="btn-group ms-auto">
                         <button className="btn btn-outline-secondary"
@@ -130,9 +129,9 @@ const PaintingsListComponent = props => {
                 <table className="table table-sm">
                     <thead className="thead-light">
                     <tr>
-                        <th>Название</th>
-                        <th>Художник</th>
+                        <th>Название картины</th>
                         <th>Музей</th>
+                        <th>Художник</th>
                         <th>
                             <div className="btn-toolbar pb-1">
                                 <div className="btn-group  ms-auto">
@@ -144,16 +143,17 @@ const PaintingsListComponent = props => {
                     </thead>
                     <tbody>
                     {
-                        names && names.map((painting, index) =>
+                        paintings && paintings.map((painting, index) =>
                             <tr key={painting.id}>
                                 <td>{painting.name}</td>
+                                <td>{painting.museum.name}</td>
                                 <td>{painting.artist.name}</td>
                                 <td>
                                     <div className="btn-toolbar">
                                         <div className="btn-group  ms-auto">
                                             <button className="btn btn-outline-secondary btn-sm btn-toolbar"
                                                     onClick={() =>
-                                                        updatePaintingsClicked(painting.id)}>
+                                                        updatePaintingClicked(painting.id)}>
                                                 <FontAwesomeIcon icon={faEdit} fixedWidth />
                                             </button>
                                         </div>

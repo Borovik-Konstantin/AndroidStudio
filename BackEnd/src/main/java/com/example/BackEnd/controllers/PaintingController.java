@@ -79,4 +79,15 @@ public class PaintingController {
             resp.put("deleted", Boolean.FALSE);
         return ResponseEntity.ok(resp);
     }
+    @PostMapping("/deletepaintings")
+    public ResponseEntity<HttpStatus> deletePaintings(@RequestBody List<Painting> paintings) {
+        System.out.println(paintings.get(0).toString());
+        List<Long> listOfIds = new ArrayList<>();
+        for (Painting painting : paintings) {
+            listOfIds.add(painting.id);
+        }
+        paintingRepository.deleteAllById(listOfIds);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

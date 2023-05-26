@@ -148,7 +148,6 @@ const ArtistListComponent = props => {
                                 <td>{artist.name}</td>
                                 <td>{artist.age}</td>
                                 <td>{artist.country.name}</td>
-                                <td>
                                     <div className="btn-toolbar">
                                         <div className="btn-group  ms-auto">
                                             <button className="btn btn-outline-secondary btn-sm btn-toolbar"
@@ -163,7 +162,6 @@ const ArtistListComponent = props => {
                                                    onChange={handleCheckChange} />
                                         </div>
                                     </div>
-                                </td>
                             </tr>
                         )
                     }
