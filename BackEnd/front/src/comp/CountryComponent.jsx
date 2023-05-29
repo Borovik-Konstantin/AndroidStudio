@@ -44,7 +44,7 @@ const CountryComponent = props => {
     return (
         <div className="m-4">
             <div className="row my-2 mr-0">
-                <h3>Страна</h3>
+                <h3>Данные страны</h3>
                 <button
                     className="btn btn-outline-secondary ml-auto"
                     onClick={()=>  navigateToCountries() }><FontAwesomeIcon

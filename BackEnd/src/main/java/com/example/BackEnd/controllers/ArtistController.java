@@ -23,7 +23,7 @@ import java.util.*;
 @RequestMapping("/api/v1")
 public class ArtistController {
 
-    public long findByName(String cName){
+    public long findCountryIdByName(String cName){
         long id = 252;
         for (long index = 0; index < 251; index++){
             Optional <Country> cc = countryRepository.findById(index);
@@ -60,7 +60,7 @@ public class ArtistController {
     public ResponseEntity<Object> createArtist(@RequestBody Artist artist) throws Exception {
         try {
 
-            long ind = findByName(artist.country.name);
+            long ind = findCountryIdByName(artist.country.name);
             if (ind > 251){
                 throw new Exception("Неизвестная страна");
             }
@@ -88,14 +88,23 @@ public class ArtistController {
         artistRepository.deleteAllById(listOfIds);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     @PutMapping("/artists/{id}")
     public ResponseEntity<Artist> updateArtist(@PathVariable(value = "id") Long artistId,
                                                @RequestBody Artist artist) {
         Artist artistt = null;
         Optional<Artist> cc = artistRepository.findById(artistId);
+        long ind = findCountryIdByName(artist.country.name);
+        if (ind > 251) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "country not found");
+        }
+        Optional<Country>
+                countr = countryRepository.findById(ind);
+        countr.ifPresent(country -> artist.country = country);
         if (cc.isPresent()) {
             artistt = cc.get();
             artistt.name = artist.name;
+            artistt.country = artist.country;
             artistt.age = artist.age;
             System.out.println(artistt.country.name);
             artistRepository.save(artistt);

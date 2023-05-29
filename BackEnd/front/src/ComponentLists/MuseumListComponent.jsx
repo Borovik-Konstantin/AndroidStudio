@@ -53,10 +53,10 @@ const MuseumListComponent = props => {
         if (x.length > 0) {
             var msg;
             if (x.length > 1) {
-                msg = "Пожалуйста подтвердите удаление " + x.length + " стран";
+                msg = "Пожалуйста подтвердите удаление " + x.length + " музеев";
             }
             else {
-                msg = "Пожалуйста подтвердите удаление страны " + x[0].name;
+                msg = "Пожалуйста подтвердите удаление музея " + x[0].name;
             }
             setShowAlert(true);
             setSelectedMuseums(x);

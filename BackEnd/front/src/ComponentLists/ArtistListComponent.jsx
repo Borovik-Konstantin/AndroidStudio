@@ -52,10 +52,10 @@ const ArtistListComponent = props => {
         if (x.length > 0) {
             var msg;
             if (x.length > 1) {
-                msg = "Пожалуйста подтвердите удаление " + x.length + " стран";
+                msg = "Пожалуйста подтвердите удаление " + x.length + " художников";
             }
             else {
-                msg = "Пожалуйста подтвердите удаление страны " + x[0].name;
+                msg = "Пожалуйста подтвердите удаление художника " + x[0].name;
             }
             setShowAlert(true);
             setSelectedArtists(x);
@@ -148,6 +148,7 @@ const ArtistListComponent = props => {
                                 <td>{artist.name}</td>
                                 <td>{artist.age}</td>
                                 <td>{artist.country.name}</td>
+                                <td>
                                     <div className="btn-toolbar">
                                         <div className="btn-group  ms-auto">
                                             <button className="btn btn-outline-secondary btn-sm btn-toolbar"
@@ -162,6 +163,7 @@ const ArtistListComponent = props => {
                                                    onChange={handleCheckChange} />
                                         </div>
                                     </div>
+                                </td>
                             </tr>
                         )
                     }

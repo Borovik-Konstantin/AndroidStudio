@@ -66,10 +66,11 @@ public class MuseumController {
         if (cc.isPresent()) {
             mus = cc.get();
             mus.name = museum.name;
+            mus.location = museum.location;
             museumRepository.save(mus);
             return ResponseEntity.ok(mus);
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "artist not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "museum not found");
         }
     }
 

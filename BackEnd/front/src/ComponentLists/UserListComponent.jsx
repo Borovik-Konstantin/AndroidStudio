@@ -50,6 +50,7 @@ const UsersListComponent = props => {
                     <tr>
                         <th>Id</th>
                         <th>Имя пользователя</th>
+                        <th>Почта</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -58,6 +59,7 @@ const UsersListComponent = props => {
                             <tr key={user.id}>
                                 <td width="10%">{user.id}</td>
                                 <td>{user.login}</td>
+                                <td>{user.email}</td>
                             </tr>
                         )
                     }

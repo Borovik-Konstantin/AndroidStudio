@@ -11,11 +11,10 @@ const PaintingComponent = props => {
     const [hidden, setHidden] = useState(false);
     const navigate = useNavigate();
     const [name, setName] = useState("")
-    const [century, setCentury] = useState()
     const [museumName, setMuseum] = useState()
     const [artistName, setArtist] = useState()
     const [id, setId] = useState(useParams().id)
-
+    const [year, setYear] = useState()
     const updateName = (event) => {
         setName(event.target.value)
     }
@@ -25,8 +24,8 @@ const PaintingComponent = props => {
     const updateArtist = (event)=>{
         setArtist(event.target.value)
     }
-    const updateCentury = (event) => {
-        setCentury(event.target.value)
+    const updateYear = (event) => {
+        setYear(event.target.value)
     }
 
     const onSubmit = (event) => {
@@ -36,13 +35,13 @@ const PaintingComponent = props => {
         if (name === "") {
             err = "Имя должно быть указано"
         }
-        let painting = {name: name, artist: {"id": id ,"name": artistName}, museum: {"name": museumName, "location": "Hj", "id": id}}
+        let painting = {id: id, name: name, artist: {"id": id ,"name": artistName}, museum: {"name": museumName, "location": "Hj", "id": id}, year: year}
         if (parseInt(id) == -1) {
             BackendService.createPainting(painting)
                 .catch(() => { })
         }
         else {
-            let painting = {name: name, artist: {"id": id ,"name": artistName}, museum: {"name": name, "location": "hj", "id": id}, }
+            let painting = {id: id, name: name, artist: {"id": id ,"name": artistName}, museum: {"name": museumName, "location": "hj", "id": id}, year: year}
             BackendService.updatePainting(painting)
                 .catch(() => { })
         }
@@ -58,7 +57,7 @@ const PaintingComponent = props => {
     return (
         <div className="m-4">
             <div className="row my-2 mr-0">
-                <h3>Добавить картину</h3>
+                <h3>Данные картины</h3>
                 <button
                     className="btn btn-outline-secondary ml-auto"
                     onClick={() => navigateToPaintings()}><FontAwesomeIcon
@@ -73,6 +72,27 @@ const PaintingComponent = props => {
                         placeholder="Введите название картины"
                         onChange={updateName}
                         value={name}
+                        name="name"
+                        autoComplete="off" />
+                    <Form.Control
+                        type="text"
+                        placeholder="Введите имя художника"
+                        onChange={updateArtist}
+                        value={artistName}
+                        name="name"
+                        autoComplete="off" />
+                    <Form.Control
+                        type="text"
+                        placeholder="Введите название музея"
+                        onChange={updateMuseum}
+                        value={museumName}
+                        name="name"
+                        autoComplete="off" />
+                    <Form.Control
+                        type="text"
+                        placeholder="Введите год создания"
+                        onChange={updateYear}
+                        value={year}
                         name="name"
                         autoComplete="off" />
 

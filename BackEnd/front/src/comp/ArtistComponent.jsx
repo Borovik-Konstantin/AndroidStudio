@@ -32,7 +32,7 @@ const ArtistComponent = props => {
         if (name === "") {
             err = "Имя должно быть указано"
         }
-        let artist = { name: name,  country: {"id": "20", "name": countryName}, age: century}
+        let artist = { id:id, name: name,  country: {"id": "20", "name": countryName}, age: century}
         if (parseInt(id) == -1) {
             BackendService.createArtist(artist)
                 .catch(() => { })
@@ -54,7 +54,7 @@ const ArtistComponent = props => {
     return (
         <div className="m-4">
             <div className="row my-2 mr-0">
-                <h3>Добавить художника</h3>
+                <h3>Данные художника</h3>
                 <button
                     className="btn btn-outline-secondary ml-auto"
                     onClick={() => navigateToArtists()}><FontAwesomeIcon

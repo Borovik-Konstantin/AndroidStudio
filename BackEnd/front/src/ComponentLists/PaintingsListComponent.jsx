@@ -52,10 +52,10 @@ const PaintingsListComponent = props => {
         if (x.length > 0) {
             var msg;
             if (x.length > 1) {
-                msg = "Пожалуйста подтвердите удаление " + x.length + " стран";
+                msg = "Пожалуйста подтвердите удаление " + x.length + " картин";
             }
             else {
-                msg = "Пожалуйста подтвердите удаление страны " + x[0].name;
+                msg = "Пожалуйста подтвердите удаление картины " + x[0].name;
             }
             setShowAlert(true);
             setSelectedPaintings(x);
@@ -81,6 +81,7 @@ const PaintingsListComponent = props => {
     }
 
     const updatePaintingClicked = id => {
+
         navigate(`/paintings/${id}`)
     }
 
@@ -103,7 +104,7 @@ const PaintingsListComponent = props => {
     return (
         <div className="m-4">
             <div className="row my-2">
-                <h3>Художники</h3>
+                <h3>Картины</h3>
                 <div className="btn-toolbar">
                     <div className="btn-group ms-auto">
                         <button className="btn btn-outline-secondary"
@@ -130,8 +131,9 @@ const PaintingsListComponent = props => {
                     <thead className="thead-light">
                     <tr>
                         <th>Название картины</th>
-                        <th>Музей</th>
-                        <th>Художник</th>
+                        <th>Имя художника</th>
+                        <th>Название музея</th>
+                        <th>Год создания</th>
                         <th>
                             <div className="btn-toolbar pb-1">
                                 <div className="btn-group  ms-auto">
@@ -146,8 +148,9 @@ const PaintingsListComponent = props => {
                         paintings && paintings.map((painting, index) =>
                             <tr key={painting.id}>
                                 <td>{painting.name}</td>
-                                <td>{painting.museum.name}</td>
                                 <td>{painting.artist.name}</td>
+                                <td>{painting.museum.name}</td>
+                                <td>{painting.year}</td>
                                 <td>
                                     <div className="btn-toolbar">
                                         <div className="btn-group  ms-auto">
