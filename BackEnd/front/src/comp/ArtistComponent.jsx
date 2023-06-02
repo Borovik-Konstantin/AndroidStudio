@@ -36,13 +36,14 @@ const ArtistComponent = props => {
         if (parseInt(id) == -1) {
             BackendService.createArtist(artist)
                 .catch(() => { })
+                .finally(()=> {navigateToArtists()})
         }
         else {
             let artist = { name: name, id: id,  country: {"id": "20", "name": countryName}, age: century}
             BackendService.updateArtist(artist)
                 .catch(() => { })
+                .finally(()=> {navigateToArtists()})
         }
-        navigateToArtists()
     }
 
     const navigateToArtists = () => {
@@ -60,17 +61,18 @@ const ArtistComponent = props => {
                     onClick={() => navigateToArtists()}><FontAwesomeIcon
                     icon={faChevronLeft} />{' '}Назад</button>
             </div>
-            <Form onSubmit={onSubmit}>
+            <Form className="form-list" onSubmit={onSubmit}>
                 <Form.Group>
-                    <Form.Label>Название</Form.Label>
-
                     <Form.Control
                         type="text"
                         placeholder="Введите имя художника"
                         onChange={updateName}
                         value={name}
                         name="name"
-                        autoComplete="off" />
+                        autoComplete="off">
+                    </Form.Control>
+
+
                     <Form.Control
                         type="int"
                         placeholder="Введите страну"

@@ -39,13 +39,14 @@ const PaintingComponent = props => {
         if (parseInt(id) == -1) {
             BackendService.createPainting(painting)
                 .catch(() => { })
+                .finally(()=> {navigateToPaintings()})
         }
         else {
             let painting = {id: id, name: name, artist: {"id": id ,"name": artistName}, museum: {"name": museumName, "location": "hj", "id": id}, year: year}
             BackendService.updatePainting(painting)
                 .catch(() => { })
+                .finally(()=> {navigateToPaintings()})
         }
-        navigateToPaintings()
     }
 
     const navigateToPaintings = () => {
@@ -63,9 +64,9 @@ const PaintingComponent = props => {
                     onClick={() => navigateToPaintings()}><FontAwesomeIcon
                     icon={faChevronLeft} />{' '}Назад</button>
             </div>
-            <Form onSubmit={onSubmit}>
+            <Form className="form-list" onSubmit={onSubmit}>
                 <Form.Group>
-                    <Form.Label>Название</Form.Label>
+
 
                     <Form.Control
                         type="text"

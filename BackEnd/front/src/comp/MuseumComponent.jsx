@@ -32,13 +32,14 @@ const MuseumComponent = props => {
         if (parseInt(id) == -1) {
             BackendService.createMuseum(musem)
                 .catch(()=>{})
+                .finally(()=> {navigateToMuseums()})
         }
         else {
             let musem = {name: name,location: location, id: id}
             BackendService.updateMuseum(musem)
                 .catch(()=>{})
+                .finally(()=> {navigateToMuseums()})
         }
-        navigateToMuseums()
     }
 
     const navigateToMuseums = () => {
@@ -56,9 +57,9 @@ const MuseumComponent = props => {
                     onClick={()=>  navigateToMuseums() }><FontAwesomeIcon
                     icon={faChevronLeft}/>{' '}Назад</button>
             </div>
-            <Form onSubmit={onSubmit}>
+            <Form className="form-list" onSubmit={onSubmit}>
                 <Form.Group>
-                    <Form.Label>Название</Form.Label>
+
 
                     <Form.Control
                         type="text"

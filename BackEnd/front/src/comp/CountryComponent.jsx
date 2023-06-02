@@ -27,12 +27,14 @@ const CountryComponent = props => {
         if (parseInt(id) == -1) {
             BackendService.createCountry(countr)
                 .catch(()=>{})
+                .finally(()=> {navigateToCountries()})
         }
         else {
             BackendService.updateCountry(countr)
                 .catch(()=>{})
+                .finally(()=> {navigateToCountries()})
         }
-        navigateToCountries()
+
     }
 
     const navigateToCountries = () => {
@@ -50,9 +52,9 @@ const CountryComponent = props => {
                     onClick={()=>  navigateToCountries() }><FontAwesomeIcon
                     icon={faChevronLeft}/>{' '}Назад</button>
             </div>
-            <Form onSubmit={onSubmit}>
+            <Form className="form-list" onSubmit={onSubmit}>
                 <Form.Group>
-                    <Form.Label>Название</Form.Label>
+
 
                     <Form.Control
                         type="text"

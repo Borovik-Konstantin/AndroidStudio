@@ -74,6 +74,10 @@
 .page-link:hover {
   color: black;
 }
-
+.form-list{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 
 
